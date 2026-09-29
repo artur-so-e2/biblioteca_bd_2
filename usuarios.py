@@ -1,12 +1,11 @@
-import sqlite3 as sqlite
+def inclui_usuario(conn, nome_usuario):
+    conn.execute("INSERT INTO usuarios(nome VALUES(?)", (nome_usuario,))
+    conn.commit()
 
-conn = sqlite.connect("biblioteca.bd")
-conn.execute("DROP TABLE IF EXISTS usuarios")
+def lista_usuario(conn):
+    cursor = conn.cursor()
 
-sql_create = "CREATE TABLE usuarios(id INTEGER PRIMARY KEY AUTOINCREMENT, nome VARCHAR(100) NOT NULL)"
-conn.execute(sql_create)
+    resultados = cursor.fetchall()
 
-sql_insert = "INSERT INTO usuarios(nome) VALUES(?)"
-
-conn.executemany(sql_insert, [('Eduardo',), ('Mariana',), ('Jôsevonio',)])
-conn.commit()
+    for linha in resultados:
+        print(f"ID: {linha['id']}    NOME: {linha['nome']}")
