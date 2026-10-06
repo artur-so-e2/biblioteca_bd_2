@@ -1,12 +1,21 @@
-import sqlite3 as sqlite
+def inclui_editora(con, nome):
+    con.execute("INSERT INTO editoras(nome) VALUES(?)", (nome,))
+    con.commit()
 
-conn = sqlite.connect("biblioteca.bd")
-conn.execute("DROP TABLE IF EXISTS emprestimos")
+def get_id_editora(con, nome_editora):
+    cursor = con.cursor()
 
-sql_create = "CREATE TABLE emprestimos(id INTEGER PRIMARY KEY AUTOINCREMENT, usuario_id INTEGER REFERENCES usuarios(id), data DATE DEFAULT CURRENT_DATE)"
-conn.execute(sql_create)
+    cursor.execute(f"SELECT id FROM editoras WHERE nome = '{nome_editora}'")
+    resultado = cursor.fetchone()
+    return resultado[0]
 
-sql_insert = "INSERT INTO emprestimos(usuario_id) VALUES(?)"
 
-conn.executemany(sql_insert, [(2,), (1,)])
-conn.commit()
+def lista_editoras(con):
+    cursor = con.cursor()
+
+    cursor.execute("SELECT * FROM editoras")
+
+    resultados = cursor.fetchall()
+
+    for linha in resultados:
+        print(f"id: {linha['id']} | nome: {linha['nome']}")

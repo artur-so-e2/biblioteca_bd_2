@@ -1,12 +1,21 @@
-import sqlite3 as sqlite
+def inclui_autor(con, nome):
+    con.execute("INSERT INTO autores(nome) VALUES(?)", (nome,))
+    con.commit()
 
-conn = sqlite.connect("biblioteca.bd")
-conn.execute("DROP TABLE IF EXISTS autores")
+def get_id_autor(con, nome_autor):
+    cursor = con.cursor()
 
-sql_create = "CREATE TABLE autores(id INTEGER PRIMARY KEY AUTOINCREMENT, nome VARCHAR(100) NOT NULL)"
-conn.execute(sql_create)
+    cursor.execute(f"SELECT id FROM autores WHERE nome = '{nome_autor}'")
+    resultado = cursor.fetchone()
+    return resultado[0]
 
-sql_insert = "INSERT INTO autores(nome) VALUES(?)"
 
-conn.executemany(sql_insert, [('José',), ('Pitágoras',), ('Isaac B.',), ('Letucia',)])
-conn.commit()
+def lista_autores(con):
+    cursor = con.cursor()
+
+    cursor.execute("SELECT * FROM autores")
+
+    resultados = cursor.fetchall()
+
+    for linha in resultados:
+        print(f"ID: {linha['id']}    NOME: {linha['nome']}")

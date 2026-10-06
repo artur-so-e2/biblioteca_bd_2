@@ -1,9 +1,11 @@
-def inclui_usuario(conn, nome_usuario):
-    conn.execute("INSERT INTO usuarios(nome VALUES(?)", (nome_usuario,))
-    conn.commit()
+def inclui_usuario(con, nome):
+    con.execute("INSERT INTO usuarios(nome) VALUES(?)", (nome,))
+    con.commit()
 
-def lista_usuario(conn):
-    cursor = conn.cursor()
+def lista_usuarios(con):
+    cursor = con.cursor()
+
+    cursor.execute("SELECT * FROM usuarios")
 
     resultados = cursor.fetchall()
 
