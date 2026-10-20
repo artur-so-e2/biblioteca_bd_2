@@ -4,7 +4,7 @@ from util import limpa_tela
 from usuarios import inclui_usuario, lista_usuarios
 from autores import inclui_autor, lista_autores, get_id_autor
 from editoras import inclui_editora, lista_editoras, get_id_editora
-#from emprestimos import inclui_emprestimo, lista_emprestimos
+# from emprestimos import inclui_emprestimo, lista_emprestimos
 
 conn = sqlite.connect("biblioteca.db")
 conn.row_factory = sqlite.Row
@@ -83,12 +83,12 @@ def menu_livros():
             elif disponivel_text == 'N':
                 disponivel == False
             else:
-                input("Opção inválida! Aperte 'Enter' para continuar...")
+                input("Aqui tá o erro")
                 break
             inclui_editora(conn, titulo, id_autor, id_editora, ano_publicacao, edicao, disponivel)
         elif (opcao == '2'):
             lista_editoras(conn)
-            input("Opção inválida! Aperte 'Enter' para continuar...")
+            input("Aperte 'Enter' para continuar...")
         elif (opcao == '3'):
             limpa_tela()
             break
@@ -123,22 +123,23 @@ def menu_emprestimos():
 
 while (True):
     limpa_tela()
-    print("===== Sistema da biblioteca ======")
-    print("(1)-Usuários\n(2)-Autores\n(3)-Editoras\n(4)-Livros")
-    opcao = input("Digite a opção: ")
+    print("="*15, "Sistema da biblioteca", "="*15)
+    print("1 - Usuários\n2 - Autores\n3 - Editoras\n4 - Livros\n5 - Empréstimos\n6 - Sair")
+    opcao = input("Digite a opção que deseja fazer: ")
 
-    if (opcao == '1'):
+    if opcao == '1':
         menu_usuarios()
-    elif (opcao == '2'):
+    elif opcao == '2':
         menu_autores()
-    elif (opcao == '3'):
+    elif opcao == '3':
         menu_editoras()
-    elif (opcao == '4'):
+    elif opcao == '4':
         menu_livros()
-    elif (opcao == '5'):
+    elif opcao == '5':
         menu_emprestimos()
-    else:
+    elif opcao == '6':
         break
+    else:
+        input("Opção inválida! Digite uma tecla para continuar...")
 
-#fecha a conexão
 conn.close()

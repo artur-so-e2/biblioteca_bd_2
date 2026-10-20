@@ -1,4 +1,8 @@
 def inclui_livro(con, titulo, autor_id, editora_id, ano, edicao, disponivel):
+    if disponivel == True:
+        disponivel = 1
+    elif disponivel == False:
+        disponivel = 0
     sql_insert = "INSERT INTO livros(titulo, autor_id, editora_id, ano_publicacao, edicao, disponivel) VALUES(?, ?, ?, ?, ?, ?)"
     con.execute(sql_insert, (titulo, autor_id, editora_id, ano, edicao, disponivel))
     con.commit()
@@ -12,4 +16,4 @@ def listar_livros(con):
     resultados = cursor.fetchall()
 
     for linha in resultados:
-        print(f"ID: {linha['id']}    TÍTULO: {linha['titulo']}    ANO DE PUBLICAÇÃO: {linha['ano_publicacao']}    EDIÇÃO: {linha['edicao']}    DISPONIBILIDADE: {linha['disponivel']}    AUTOR: {linha['autor']}    EDITORA: {linha['editora']}")
+        print(f"ID: {linha['id']}    TÍTULO: {linha['titulo']}    " + f"ANO DE PUBLICAÇÃO: {linha['ano_publicacao']}    EDIÇÃO: {linha['edicao']}    " + f"DISPONIBILIDADE: {linha['disponivel']}    AUTOR: {linha['autor']}    " + f"EDITORA: {linha['editora']}")
